@@ -1,0 +1,38 @@
+<% if @transactions.any? %>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Ticker</th>
+        <th>Type</th>
+        <th>Quantity</th>
+        <th>Price per share</th>
+        <th>Total amount</th>
+        <th>Currency</th>
+        <th>FX rate</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @transactions.each do |transaction| %>
+        <tr>
+          <td><%= transaction.ticker %></td>
+          <td><%= transaction.type %></td>
+          <td><%= transaction.quantity.to_f %></td>
+          <td><%= transaction.price_per_share.to_f %></td>
+          <td><%= transaction.total_amount.to_f %></td>
+          <td><%= transaction.currency %></td>
+          <td><%= transaction.fx_rate.to_f %></td>
+          <td><%= transaction.date %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="card border-info mb-3">
+    <div class="card-body text-center p-5">
+      <em>Nothing to display!</em>
+      <br />
+      <a href="/import">Go to Import page</a>
+    </div>
+  </div>
+<% end %>
