@@ -4,7 +4,6 @@ require 'pry' if ENV['RACK_ENV'] == 'development'
 require 'roda'
 require 'securerandom'
 require 'sequel'
-require 'csv'
 
 require './db'
 
@@ -25,7 +24,7 @@ class App < Roda
     r.assets
 
     r.root do
-      @transactions = Transaction.all
+      @transactions = Transaction.dataset
       view 'home'
     end
 
@@ -42,6 +41,13 @@ class App < Roda
           flash[:error] = 'Failed to import transactions'
           r.redirect
         end
+      end
+    end
+
+    r.on 'statistics' do
+      r.is 'dividends' do
+        @transactions = Transaction.dataset.where(type: 'DIVIDEND')
+        view 'statistics/dividends'
       end
     end
   end

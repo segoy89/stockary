@@ -3,9 +3,6 @@
     <thead>
       <tr>
         <th>Ticker</th>
-        <th>Type</th>
-        <th>Quantity</th>
-        <th>Price per share</th>
         <th>Total amount</th>
         <th>Currency</th>
         <th>FX rate</th>
@@ -16,9 +13,6 @@
       <% @transactions.each do |transaction| %>
         <tr>
           <td><%= transaction.ticker %></td>
-          <td><%= transaction.type %></td>
-          <td><%= transaction.quantity.to_f %></td>
-          <td><%= transaction.price_per_share.to_f %></td>
           <td><%= transaction.display_amount %></td>
           <td><%= transaction.currency %></td>
           <td><%= transaction.fx_rate.to_f %></td>
@@ -32,7 +26,7 @@
     <div class="card-body text-center p-5">
       <em>Nothing to display!</em>
       <br />
-      <a href="/import">Go to Import page</a>
+      <a href="/">Go to Home page</a>
     </div>
   </div>
 <% end %>
