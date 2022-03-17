@@ -45,9 +45,16 @@ class App < Roda
     end
 
     r.on 'statistics' do
-      r.is 'dividends' do
-        @transactions = Transaction.dataset.where(type: 'DIVIDEND')
-        view 'statistics/dividends'
+      r.on 'dividends' do
+        r.get String do |ticker|
+          @dividends = DividendsService.call(ticker.upcase)
+          view 'statistics/dividends_per_ticker'
+        end
+
+        r.get do
+          @tickers = Transaction.where(type: 'DIVIDEND').map(&:ticker).uniq.sort
+          view 'statistics/dividends'
+        end
       end
     end
   end

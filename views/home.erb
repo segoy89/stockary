@@ -1,32 +1,89 @@
 <% if @transactions.any? %>
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Ticker</th>
-        <th>Type</th>
-        <th>Quantity</th>
-        <th>Price per share</th>
-        <th>Total amount</th>
-        <th>Currency</th>
-        <th>FX rate</th>
-        <th>Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @transactions.each do |transaction| %>
-        <tr>
-          <td><%= transaction.ticker %></td>
-          <td><%= transaction.type %></td>
-          <td><%= transaction.quantity.to_f %></td>
-          <td><%= transaction.price_per_share.to_f %></td>
-          <td><%= transaction.display_amount %></td>
-          <td><%= transaction.currency %></td>
-          <td><%= transaction.fx_rate.to_f %></td>
-          <td><%= transaction.date %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <ul class="nav nav-tabs border-0">
+    <li class="nav-item">
+      <a class="nav-link active px-4" data-bs-toggle="tab" href="#board">Board</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link px-5" data-bs-toggle="tab" href="#list">List</a>
+    </li>
+  </ul>
+  <div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade active show" id="board">
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <div class="card border-primary mb-3 p-4">
+            <div class="card-body">
+              <h4 class="card-title mb-3">Stocks</h4>
+              <p class="card-text">You have <em><%= @transactions.exclude(ticker: nil).uniq.count %></em> stocks in your wallet!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card text-white bg-success mb-3 p-4">
+            <div class="card-body">
+              <h4 class="card-title mb-3">Dividends</h4>
+              <p class="card-text">
+                <%= @transactions.where(type: 'DIVIDEND').sum(:total_amount).to_f %> USD
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card text-white bg-warning mb-3 p-4">
+            <div class="card-body">
+              <h4 class="card-title mb-3">Expenses</h4>
+              <p class="card-text">
+                <%= @transactions.where(type: 'BUY').sum(:total_amount).to_f %> USD
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card text-white bg-danger mb-3 p-4">
+            <div class="card-body">
+              <h4 class="card-title mb-3">Fees</h4>
+              <p class="card-text">
+                <%= @transactions.where(type: 'CUSTODY_FEE').sum(:total_amount).to_f %> USD
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="list">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Ticker</th>
+            <th>Type</th>
+            <th>Quantity</th>
+            <th>Price per share</th>
+            <th>Total amount</th>
+            <th>Currency</th>
+            <th>FX rate</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @transactions.each do |transaction| %>
+            <tr>
+              <td><%= transaction.ticker %></td>
+              <td><%= transaction.type %></td>
+              <td><%= transaction.quantity.to_f %></td>
+              <td><%= transaction.price_per_share.to_f %></td>
+              <td><%= transaction.display_amount %></td>
+              <td><%= transaction.currency %></td>
+              <td><%= transaction.fx_rate.to_f %></td>
+              <td><%= transaction.date %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 <% else %>
   <div class="card border-info mb-3">
     <div class="card-body text-center p-5">

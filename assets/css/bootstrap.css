@@ -4142,7 +4142,7 @@ fieldset:disabled .btn {
 }
 
 .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
-  border-color: #f7f7f9 #f7f7f9 #eceeef;
+  border-color: #f7f7f9;
   isolation: isolate;
 }
 
@@ -4156,7 +4156,7 @@ fieldset:disabled .btn {
 .nav-tabs .nav-item.show .nav-link {
   color: #55595c;
   background-color: #fff;
-  border-color: #eceeef #eceeef #fff;
+  border-color: #eceeef;
 }
 
 .nav-tabs .dropdown-menu {
