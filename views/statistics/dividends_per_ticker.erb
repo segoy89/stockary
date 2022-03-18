@@ -1,0 +1,59 @@
+<% if @dividends.any? %>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Ticker</th>
+        <th>Amount</th>
+        <th>Currency</th>
+        <th>FX rate</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @dividends[:transactions].each do |transaction| %>
+        <tr>
+          <td><%= transaction.ticker %></td>
+          <td><%= transaction.display_amount %></td>
+          <td><%= transaction.currency %></td>
+          <td><%= transaction.fx_rate.to_f %></td>
+          <td><%= transaction.date %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <ul class="list-group col-md-6">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <span>Dividends amount:</span>
+      <span><%= @dividends[:total_amount].to_f %></span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <span>Dividends / month:</span>
+      <span><%= @dividends[:amount_per_month].to_f %></span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <span>Dividends / month / share:</span>
+      <span><%= @dividends[:amount_per_month_per_share].to_f %></span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <span>Last dividend / share:</span>
+      <span><%= @dividends[:amount_last_month_per_share].to_f %></span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center active">
+      <span>Shares:</span>
+      <span><%= @dividends[:stock][:shares].to_f %></span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center active">
+      <span>Cash spent to buy:</span>
+      <span><%= @dividends[:stock][:spent_to_buy].to_f %></span>
+    </li>
+  </ul>
+<% else %>
+  <div class="card border-info mb-3">
+    <div class="card-body text-center p-5">
+      <em>Nothing to display!</em>
+      <br />
+      <a href="/">Go to Home page</a>
+    </div>
+  </div>
+<% end %>
